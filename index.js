@@ -125,7 +125,16 @@ function findById(movies, id) {
  *  filterByGenre(movies, "Horror")
  *  //> []
  */
-function filterByGenre() {}
+function filterByGenre(movies, genre) {
+  if (movies.length === 0) {
+    throw "No movies titles provided";
+  }
+  genre = genre[0] + genre.slice(1).toLowerCase();
+
+  return movies.filter((item) => {
+    return item["genre"].includes(genre);
+  });
+}
 
 /**
  * getAllMoviesReleasedAtOrBeforeYear()
@@ -151,7 +160,16 @@ function filterByGenre() {}
       }
     ];
  */
-function getAllMoviesReleasedAtOrBeforeYear() {}
+function getAllMoviesReleasedAtOrBeforeYear(movies, year) {
+  if (movies.length === 0) {
+    throw "No movies titles provided";
+  }
+
+  return movies.filter((item) => {
+    let date = item.released.slice(-4);
+    return +date <= year;
+  });
+}
 
 /**
  * getRottenTomatoesScoreByMovie()
@@ -177,7 +195,18 @@ function getAllMoviesReleasedAtOrBeforeYear() {}
       { "James and the Giant Peach": "91%" },
     ];
  */
-function getRottenTomatoesScoreByMovie() {}
+function getRottenTomatoesScoreByMovie(movies) {
+  if (movies.length === 0) {
+    throw "No movies titles provided";
+  }
+
+  return movies.map((item) => {
+    let percent = item["ratings"].find((rate) => {
+      return rate.source === "Rotten Tomatoes";
+    });
+    return { [item.title]: percent.value };
+  });
+}
 
 // Do not change anything below this line.
 module.exports = {
